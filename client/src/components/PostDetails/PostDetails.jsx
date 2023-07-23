@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
+import React, { useState, useEffect } from 'react';
+import { Paper, Typography, CircularProgress, Divider, Button } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory, Link } from 'react-router-dom';
@@ -9,6 +9,8 @@ import CommentSection from './CommentSection';
 import useStyles from './styles';
 
 const Post = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -59,7 +61,7 @@ const Post = () => {
           </Typography>
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1"><strong>Dokumen anda sedang dalam proses "VERIFIKASI OLEH PENDATA"</strong></Typography>
+          <Typography variant="body1"><strong>Dokumen anda sedang dalam proses : "{post.process}"</strong></Typography>
           <Divider style={{ margin: '20px 0' }} />
           <CommentSection post={post} />
           <Divider style={{ margin: '20px 0' }} />
